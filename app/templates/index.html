@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Reservation App</title>
+</head>
+<body>
+    <h1>Reservation List</h1>
+    <ul>
+        {% for r in reservations %}
+            <li>{{ r.name }} - {{ r.date }} at {{ r.time }} (Phone: {{ r.phone }})</li>
+        {% else %}
+            <li>No reservations yet.</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Add Reservation</h2>
+    <form method="POST" action="{{ url_for('main.add') }}">
+        <input type="text" name="name" placeholder="Customer Name" required><br><br>
+        <input type="text" name="phone" placeholder="Phone Number" required><br><br>
+        <input type="date" name="date" required><br><br>
+        <input type="time" name="time" required><br><br>
+        <button type="submit">Add Reservation</button>
+    </form>
+</body>
+</html>
