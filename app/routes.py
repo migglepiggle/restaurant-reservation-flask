@@ -1,15 +1,15 @@
-from flask import Blueprint, render_template, request, redirect, flash
-from app.models import Reservation
+from flask import Blueprint, render_template, request, redirect, url_for
 from app import db
+from app.models import Reservation
 
-bp = Blueprint('main', __name__)
+main = Blueprint('main', __name__)
 
-@bp.route('/')
+@main.route('/')
 def index():
     reservations = Reservation.query.all()
     return render_template('index.html', reservations=reservations)
 
-@bp.route('/add', methods=['POST'])
+@main.route('/add', methods=['POST'])
 def add():
     name = request.form['name']
     phone = request.form['phone']
@@ -19,5 +19,4 @@ def add():
     new_reservation = Reservation(name=name, phone=phone, date=date, time=time)
     db.session.add(new_reservation)
     db.session.commit()
-    flash('Reservation added!')
-    return redirect('/')
+    return redirect(url_for('main.index'))

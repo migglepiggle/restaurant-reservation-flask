@@ -2,24 +2,59 @@
 <html>
 <head>
     <title>Reservation App</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-    <h1>Reservation List</h1>
-    <ul>
-        {% for r in reservations %}
-            <li>{{ r.name }} - {{ r.date }} at {{ r.time }} (Phone: {{ r.phone }})</li>
-        {% else %}
-            <li>No reservations yet.</li>
-        {% endfor %}
-    </ul>
+<body class="bg-light">
+    <div class="container mt-5">
+        <h1 class="mb-4 text-center">Reservation App</h1>
 
-    <h2>Add Reservation</h2>
-    <form method="POST" action="{{ url_for('main.add') }}">
-        <input type="text" name="name" placeholder="Customer Name" required><br><br>
-        <input type="text" name="phone" placeholder="Phone Number" required><br><br>
-        <input type="date" name="date" required><br><br>
-        <input type="time" name="time" required><br><br>
-        <button type="submit">Add Reservation</button>
-    </form>
+        <!-- Reservation Form -->
+        <h2 class="mb-3">Add Reservation</h2>
+        <form method="POST" action="{{ url_for('main.add') }}" class="card p-4 shadow-sm bg-white mb-5">
+            <div class="mb-3">
+                <label for="name" class="form-label">Customer Name</label>
+                <input type="text" name="name" id="name" class="form-control" placeholder="Customer Name" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="phone" class="form-label">Phone Number</label>
+                <input type="text" name="phone" id="phone" class="form-control" placeholder="Phone Number" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="date" class="form-label">Date</label>
+                <input type="date" name="date" id="date" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="time" class="form-label">Time</label>
+                <input type="time" name="time" id="time" class="form-control" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Add Reservation</button>
+        </form>
+
+        <!-- Reservation List -->
+        <h2 class="mb-4">Reservation List</h2>
+        {% if reservations %}
+            <ul class="list-group mb-5">
+                {% for r in reservations %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <strong>{{ r.name }}</strong><br>
+                            {{ r.date }} at {{ r.time }}<br>
+                            <small class="text-muted">Phone: {{ r.phone }}</small>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <div class="alert alert-info">No reservations yet.</div>
+        {% endif %}
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
